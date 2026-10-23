@@ -5,19 +5,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#17130f">
-  <meta name="description" content="Elisa — contemporary couture, considered craftsmanship, and timeless fashion.">
-  <title>Elisa — Couture & Contemporary Fashion</title>
+  <meta name="description" content="Elisa — a cinematic couture fashion experience celebrating modern elegance and timeless design.">
+  <title>ELISA — Couture in Motion</title>
 
   <style>
     :root {
-      --bg: #17130f;
-      --cream: #f5eee4;
+      --black: #17130f;
+      --black-soft: #211a15;
+      --cream: #f3ebdf;
       --gold: #c9a878;
-      --muted: #b8ad9e;
-      --line: rgba(245, 238, 228, .2);
+      --muted: #b7a99a;
+      --line: rgba(243, 235, 223, .2);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Arial, Helvetica, sans-serif;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     html {
       scroll-behavior: smooth;
@@ -26,71 +31,180 @@
 
     body {
       margin: 0;
-      background: var(--bg);
+      overflow-x: hidden;
+      background: var(--black);
       color: var(--cream);
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: var(--serif);
     }
 
-    a { color: inherit; text-decoration: none; }
+    body.menu-open {
+      overflow: hidden;
+    }
 
-    button, a { -webkit-tap-highlight-color: transparent; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    /* INTRO LOADER */
+
+    .preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      background: var(--black);
+      transition: opacity .7s ease, visibility .7s ease;
+    }
+
+    .preloader.done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .loader-logo {
+      font-size: 36px;
+      letter-spacing: .35em;
+      animation: loaderPulse 1.5s ease-in-out infinite;
+    }
+
+    .loader-line {
+      height: 1px;
+      width: 140px;
+      margin: 20px auto 0;
+      background: rgba(255,255,255,.15);
+      overflow: hidden;
+    }
+
+    .loader-line::after {
+      content: "";
+      display: block;
+      height: 100%;
+      background: var(--gold);
+      animation: loaderLine 1.4s ease-in-out infinite;
+    }
+
+    @keyframes loaderPulse {
+      50% { opacity: .45; }
+    }
+
+    @keyframes loaderLine {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(100%); }
+    }
+
+    /* NAVIGATION */
 
     .site-header {
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 20;
+      z-index: 100;
       width: 100%;
+      min-height: 84px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 25px 6%;
-      border-bottom: 1px solid var(--line);
+      justify-content: space-between;
+      padding: 20px 6%;
+      border-bottom: 1px solid rgba(255,255,255,.16);
+      transition: background .4s ease;
+    }
+
+    .site-header.scrolled {
+      position: fixed;
+      background: rgba(23,19,15,.94);
+      backdrop-filter: blur(14px);
     }
 
     .logo {
-      font-size: 27px;
-      letter-spacing: .22em;
+      font-family: var(--serif);
+      font-size: 29px;
+      letter-spacing: .24em;
       text-transform: uppercase;
+    }
+
+    .logo span {
+      color: var(--gold);
     }
 
     .site-nav {
       display: flex;
-      gap: 30px;
       align-items: center;
-      font: 10px Arial, sans-serif;
-      letter-spacing: .17em;
+      gap: 31px;
+    }
+
+    .site-nav a {
+      position: relative;
+      padding: 10px 0;
+      font: 10px var(--sans);
+      letter-spacing: .16em;
       text-transform: uppercase;
     }
 
-    .site-nav a:hover { color: var(--gold); }
+    .site-nav a::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width .35s ease;
+    }
+
+    .site-nav a:hover::after {
+      width: 100%;
+    }
 
     .menu-toggle {
       display: none;
       border: 1px solid var(--line);
       background: transparent;
       color: var(--cream);
-      padding: 10px;
+      padding: 10px 13px;
       cursor: pointer;
     }
 
-    /* HERO: the poster is a real image, not just a CSS background */
+    /* CINEMATIC HERO */
+
     .hero {
-      min-height: 760px;
+      position: relative;
+      isolation: isolate;
+      min-height: 720px;
       height: 100svh;
       max-height: 1100px;
-      position: relative;
       overflow: hidden;
-      isolation: isolate;
-      background: #201912;
+      background: #30251c;
+      perspective: 1200px;
     }
 
     .hero-media {
       position: absolute;
-      inset: 0;
+      inset: -2%;
+      z-index: -3;
       overflow: hidden;
-      background: #201912;
-      z-index: -1;
+      transform: scale(1.025);
+      animation: heroEntrance 1.7s cubic-bezier(.2,.7,.2,1) both;
     }
 
     .hero-poster {
@@ -101,342 +215,1039 @@
       height: 100%;
       object-fit: cover;
       object-position: center 25%;
-      opacity: 1;
-      z-index: 0;
+      transform: scale(1.04);
+      transition: transform 1.2s ease, opacity 1s ease;
     }
 
     .hero-video {
       position: absolute;
       inset: 0;
-      display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center 25%;
       opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 1;
+      transition: opacity 1.2s ease;
     }
 
-    .hero-video.ready { opacity: 1; }
+    .hero-video.ready {
+      opacity: 1;
+    }
 
     .hero-vignette {
       position: absolute;
       inset: 0;
-      z-index: 2;
-      pointer-events: none;
       background:
-        linear-gradient(90deg, rgba(13,10,8,.74), rgba(13,10,8,.08) 75%),
-        linear-gradient(0deg, rgba(13,10,8,.6), transparent 55%);
+        linear-gradient(90deg,
+          rgba(15,11,8,.83) 0%,
+          rgba(15,11,8,.55) 32%,
+          rgba(15,11,8,.10) 75%,
+          rgba(15,11,8,.15) 100%),
+        linear-gradient(0deg,
+          rgba(15,11,8,.68) 0%,
+          transparent 38%,
+          rgba(15,11,8,.18) 100%);
+    }
+
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .10;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+    }
+
+    .hero-topline {
+      position: absolute;
+      top: 115px;
+      left: 6%;
+      right: 6%;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: rgba(255,255,255,.78);
+      font: 9px var(--sans);
+      letter-spacing: .19em;
+      text-transform: uppercase;
     }
 
     .hero-content {
       position: absolute;
-      z-index: 3;
-      left: 10%;
       top: 50%;
-      transform: translateY(-40%);
-      max-width: 650px;
-      padding: 20px;
+      left: 10%;
+      width: min(680px, 80%);
+      transform: translateY(-42%);
+      transform-style: preserve-3d;
+      z-index: 4;
     }
 
-    .eyebrow {
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 26px;
       color: var(--gold);
-      font: 10px Arial, sans-serif;
-      letter-spacing: .28em;
+      font: 10px var(--sans);
+      letter-spacing: .25em;
       text-transform: uppercase;
+      opacity: 0;
+      animation: revealUp .8s .4s ease forwards;
     }
 
-    h1 {
+    .hero-eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 35px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(66px, 10vw, 145px);
+      line-height: .83;
       font-weight: 400;
-      font-size: clamp(56px, 9vw, 116px);
-      line-height: .92;
-      letter-spacing: -.045em;
-      margin: 25px 0;
+      letter-spacing: -.065em;
     }
 
-    h1 em { color: var(--gold); font-weight: 400; }
+    .hero-title .title-line {
+      display: block;
+      overflow: hidden;
+      padding-bottom: .1em;
+    }
+
+    .hero-title .title-line span {
+      display: inline-block;
+      transform: translateY(115%);
+      animation: titleReveal 1.15s cubic-bezier(.18,.7,.2,1) forwards;
+    }
+
+    .hero-title .title-line:nth-child(2) span {
+      animation-delay: .18s;
+    }
+
+    .hero-title em {
+      color: var(--gold);
+      font-weight: 400;
+    }
 
     .hero-copy {
       max-width: 380px;
-      color: #e2d6c8;
-      font-size: 17px;
-      line-height: 1.8;
+      margin: 30px 0 0;
+      color: rgba(255,255,255,.82);
+      font-size: 16px;
+      line-height: 1.9;
+      opacity: 0;
+      animation: revealUp .9s .85s ease forwards;
     }
 
-    .text-link {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 15px 0;
-      border-bottom: 1px solid var(--gold);
-      color: var(--cream);
-      font: 10px Arial, sans-serif;
-      letter-spacing: .2em;
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 28px;
+      margin-top: 28px;
+      opacity: 0;
+      animation: revealUp .9s 1.05s ease forwards;
+    }
+
+    .button-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      min-height: 49px;
+      padding: 0 18px;
+      border: 1px solid rgba(201,168,120,.8);
+      font: 10px var(--sans);
+      letter-spacing: .16em;
       text-transform: uppercase;
+      transition: color .3s, background .3s, transform .3s;
+    }
+
+    .button-outline:hover {
+      background: var(--gold);
+      color: var(--black);
+      transform: translateY(-3px);
+    }
+
+    .button-outline .arrow {
+      font-size: 16px;
+      transition: transform .3s;
+    }
+
+    .button-outline:hover .arrow {
+      transform: translate(3px,-3px);
+    }
+
+    .hero-index {
+      position: absolute;
+      top: 50%;
+      right: 5%;
+      z-index: 4;
+      transform: translateY(-50%);
+      writing-mode: vertical-rl;
+      color: rgba(255,255,255,.7);
+      font: 9px var(--sans);
+      letter-spacing: .23em;
+    }
+
+    .hero-index span {
+      color: var(--gold);
     }
 
     .hero-bottom {
       position: absolute;
-      bottom: 28px;
       left: 6%;
       right: 6%;
-      z-index: 3;
+      bottom: 29px;
+      z-index: 4;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      color: #e5d8c9;
-      font: 9px Arial, sans-serif;
-      letter-spacing: .17em;
+      gap: 20px;
+      color: rgba(255,255,255,.7);
+      font: 9px var(--sans);
+      letter-spacing: .16em;
       text-transform: uppercase;
     }
 
-    section:not(.hero) { padding: 110px 8%; }
+    .scroll-cue {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
 
-    .section-label {
+    .scroll-cue i {
+      display: block;
+      width: 35px;
+      height: 1px;
+      background: var(--gold);
+      animation: cuePulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes cuePulse {
+      50% { width: 55px; opacity: .45; }
+    }
+
+    @keyframes heroEntrance {
+      from { transform: scale(1.12); }
+      to { transform: scale(1.025); }
+    }
+
+    @keyframes titleReveal {
+      to { transform: translateY(0); }
+    }
+
+    @keyframes revealUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTION COMMON */
+
+    .section {
+      position: relative;
+      padding: 120px 8%;
+    }
+
+    .section-kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       color: var(--gold);
-      font: 10px Arial, sans-serif;
+      font: 10px var(--sans);
       letter-spacing: .22em;
       text-transform: uppercase;
     }
 
-    h2 {
-      margin: 20px 0;
-      font-size: clamp(38px, 5vw, 68px);
-      line-height: 1.08;
+    .section-kicker::before {
+      content: "";
+      width: 26px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      margin: 25px 0;
+      font-size: clamp(42px, 6vw, 82px);
+      line-height: 1.02;
+      letter-spacing: -.045em;
       font-weight: 400;
     }
 
-    .intro {
-      max-width: 690px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.9;
+    .section-title em {
+      color: var(--gold);
+      font-weight: 400;
     }
+
+    .section-copy {
+      max-width: 630px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.95;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(45px);
+      transition:
+        opacity .9s cubic-bezier(.2,.7,.2,1),
+        transform .9s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: .12s; }
+    .reveal-delay-2 { transition-delay: .24s; }
+    .reveal-delay-3 { transition-delay: .36s; }
+
+    /* PHILOSOPHY */
 
     .manifesto {
-      background: #e9dfd1;
-      color: #292018;
-    }
-
-    .manifesto .section-label { color: #8d6d43; }
-    .manifesto .intro { color: #5d5145; }
-
-    .collections { background: #211b16; }
-
-    .collection-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-      margin-top: 45px;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 9%;
+      background: #e9dfd1;
+      color: #2c231b;
     }
 
-    .collection-card {
-      min-height: 310px;
-      border: 1px solid var(--line);
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      background: linear-gradient(145deg, #514033, #211a15 75%);
+    .manifesto .section-kicker {
+      color: #8d6c43;
     }
 
-    .collection-card:nth-child(2) {
-      background: linear-gradient(145deg, #655449, #2b211b 75%);
+    .manifesto .section-kicker::before {
+      background: #8d6c43;
     }
 
-    .collection-card:nth-child(3) {
-      background: linear-gradient(145deg, #4c473b, #1e1914 75%);
+    .manifesto .section-title em {
+      color: #8d6c43;
     }
 
-    .collection-card span {
-      color: var(--gold);
-      font: 10px Arial, sans-serif;
-      letter-spacing: .18em;
-      text-transform: uppercase;
+    .manifesto .section-copy {
+      color: #62564a;
     }
 
-    .collection-card h3 {
-      margin: 12px 0 0;
-      font-size: 30px;
-      font-weight: 400;
-    }
-
-    .film-section {
-      text-align: center;
-      background: #15110e;
-    }
-
-    .film-panel {
-      max-width: 900px;
-      min-height: 280px;
-      margin: 35px auto 0;
+    .manifesto-visual {
+      position: relative;
+      min-height: 400px;
       display: grid;
       place-items: center;
-      border: 1px solid var(--line);
-      background: radial-gradient(ellipse, #534133 0%, #211811 48%, #15110e 100%);
+      perspective: 1000px;
     }
 
-    .film-button {
-      cursor: pointer;
-      border: 1px solid var(--gold);
-      background: transparent;
-      color: var(--cream);
-      padding: 17px 24px;
-      font: 10px Arial, sans-serif;
+    .orbit {
+      position: absolute;
+      width: 290px;
+      height: 370px;
+      border: 1px solid rgba(141,108,67,.35);
+      border-radius: 50%;
+      transform: rotate(27deg);
+      animation: orbitSpin 18s linear infinite;
+    }
+
+    .orbit.orbit-two {
+      width: 340px;
+      height: 280px;
+      transform: rotate(-28deg);
+      animation-direction: reverse;
+    }
+
+    .manifesto-center {
+      position: relative;
+      z-index: 2;
+      width: 210px;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(145deg, #c9a878, #8e6b43);
+      box-shadow: 22px 25px 50px rgba(49,33,19,.18);
+      transform: rotateY(-12deg) rotateX(5deg);
+      transition: transform .5s ease;
+    }
+
+    .manifesto-visual:hover .manifesto-center {
+      transform: rotateY(8deg) rotateX(-4deg) translateY(-7px);
+    }
+
+    .manifesto-center strong {
+      font-size: 48px;
+      font-weight: 400;
+      letter-spacing: .14em;
+    }
+
+    .manifesto-center small {
+      margin-top: 12px;
+      font: 9px var(--sans);
       letter-spacing: .2em;
       text-transform: uppercase;
     }
 
-    .process {
-      background: #e9dfd1;
-      color: #292018;
+    @keyframes orbitSpin {
+      to { rotate: 360deg; }
     }
 
-    .process .section-label { color: #8d6d43; }
+    /* 3D COLLECTION CARDS */
 
-    .process-grid {
+    .collections {
+      background: var(--black);
+      overflow: hidden;
+    }
+
+    .collections-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    .collections-heading .section-title {
+      margin-bottom: 0;
+    }
+
+    .collection-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 35px;
-      margin-top: 45px;
+      gap: 22px;
+      perspective: 1200px;
     }
 
-    .process-item { border-top: 1px solid #b8a996; padding-top: 20px; }
+    .collection-card {
+      position: relative;
+      min-height: 440px;
+      overflow: hidden;
+      background: #30241a;
+      border: 1px solid rgba(255,255,255,.1);
+      transform-style: preserve-3d;
+      transform: rotateX(0) rotateY(0);
+      transition:
+        transform .18s ease-out,
+        border-color .4s,
+        box-shadow .4s;
+      will-change: transform;
+    }
 
-    .process-item b {
-      color: #92734c;
-      font: 11px Arial, sans-serif;
+    .collection-card:hover {
+      border-color: rgba(201,168,120,.7);
+      box-shadow: 0 30px 60px rgba(0,0,0,.3);
+    }
+
+    .card-art {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 22%, rgba(201,168,120,.35), transparent 42%),
+        linear-gradient(145deg, #544033, #211811 75%);
+      transition: transform .7s ease;
+    }
+
+    .card-art::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 12%;
+      width: 57%;
+      height: 72%;
+      transform: translateX(-50%) rotate(-8deg);
+      border: 1px solid rgba(230,208,174,.32);
+      border-radius: 48% 48% 12% 12%;
+      background: linear-gradient(135deg,
+        rgba(231,213,185,.17),
+        rgba(43,31,23,.45));
+      box-shadow: 0 0 80px rgba(201,168,120,.1);
+    }
+
+    .card-art::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 18%;
+      width: 26%;
+      height: 55%;
+      transform: translateX(-50%) rotate(13deg);
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(234,211,178,.24),
+        transparent);
+      filter: blur(4px);
+    }
+
+    .card-art.art-two {
+      background:
+        radial-gradient(ellipse at 60% 30%, rgba(180,147,120,.35), transparent 42%),
+        linear-gradient(145deg, #685246, #261c17 75%);
+    }
+
+    .card-art.art-two::before {
+      width: 66%;
+      border-radius: 45% 45% 6% 6%;
+      transform: translateX(-50%) rotate(7deg);
+    }
+
+    .card-art.art-three {
+      background:
+        radial-gradient(ellipse at 35% 25%, rgba(201,168,120,.3), transparent 45%),
+        linear-gradient(145deg, #444035, #17140f 75%);
+    }
+
+    .card-art.art-three::before {
+      width: 48%;
+      transform: translateX(-50%) rotate(-15deg);
+      border-radius: 50% 50% 25% 25%;
+    }
+
+    .collection-card:hover .card-art {
+      transform: scale(1.06);
+    }
+
+    .card-number {
+      position: absolute;
+      top: 23px;
+      left: 23px;
+      z-index: 2;
+      color: rgba(255,255,255,.8);
+      font: 10px var(--sans);
+      letter-spacing: .18em;
+      transform: translateZ(35px);
+    }
+
+    .card-info {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 60px 25px 26px;
+      background: linear-gradient(transparent, rgba(12,9,7,.9));
+      transform: translateZ(35px);
+    }
+
+    .card-info small {
+      color: var(--gold);
+      font: 9px var(--sans);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .card-info h3 {
+      margin: 12px 0 0;
+      font-size: 32px;
+      font-weight: 400;
+    }
+
+    .card-info p {
+      margin: 10px 0 0;
+      color: #d2c4b5;
+      font: 12px/1.7 var(--sans);
+    }
+
+    /* FILM */
+
+    .film-section {
+      overflow: hidden;
+      text-align: center;
+      background: #211a15;
+    }
+
+    .film-section .section-kicker {
+      justify-content: center;
+    }
+
+    .film-section .section-title {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .film-section .section-copy {
+      margin: 0 auto;
+    }
+
+    .film-stage {
+      position: relative;
+      min-height: 380px;
+      max-width: 1000px;
+      margin: 48px auto 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(201,168,120,.3);
+      background:
+        radial-gradient(ellipse at 50% 45%, rgba(201,168,120,.24), transparent 45%),
+        linear-gradient(135deg, #3d2d21, #14100d);
+      perspective: 1000px;
+    }
+
+    .film-ring {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border: 1px solid rgba(201,168,120,.5);
+      border-radius: 50%;
+      transform: rotateX(67deg) rotateZ(0deg);
+      animation: ringRotate 14s linear infinite;
+    }
+
+    .film-ring.ring-two {
+      width: 360px;
+      height: 360px;
+      animation-direction: reverse;
+      opacity: .5;
+    }
+
+    .film-play {
+      position: relative;
+      z-index: 2;
+      width: 90px;
+      height: 90px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      background: rgba(20,16,12,.45);
+      color: var(--cream);
+      cursor: pointer;
+      transition: transform .4s, background .4s;
+    }
+
+    .film-play:hover {
+      transform: scale(1.12);
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    .film-play span {
+      margin-left: 5px;
+      font-size: 24px;
+    }
+
+    .film-caption {
+      position: absolute;
+      bottom: 24px;
+      left: 25px;
+      right: 25px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      color: #d5c8b8;
+      font: 9px var(--sans);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    @keyframes ringRotate {
+      to { transform: rotateX(67deg) rotateZ(360deg); }
+    }
+
+    /* CRAFT */
+
+    .craft {
+      background: #e9dfd1;
+      color: #2c231b;
+    }
+
+    .craft .section-kicker {
+      color: #8d6c43;
+    }
+
+    .craft .section-kicker::before {
+      background: #8d6c43;
+    }
+
+    .craft .section-title em {
+      color: #8d6c43;
+    }
+
+    .craft .section-copy {
+      color: #65594d;
+    }
+
+    .craft-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 35px;
+      margin-top: 55px;
+    }
+
+    .craft-item {
+      padding-top: 22px;
+      border-top: 1px solid rgba(44,35,27,.28);
+    }
+
+    .craft-item .number {
+      color: #947349;
+      font: 11px var(--sans);
       letter-spacing: .16em;
     }
 
-    .process-item h3 { font-size: 25px; font-weight: 400; }
-
-    .process-item p {
-      color: #65594d;
-      font-size: 15px;
-      line-height: 1.8;
+    .craft-item h3 {
+      margin: 22px 0 13px;
+      font-size: 27px;
+      font-weight: 400;
     }
 
-    .contact { text-align: center; }
+    .craft-item p {
+      color: #65594d;
+      font: 14px/1.9 var(--sans);
+    }
 
-    .contact .intro { margin: 0 auto; }
+    /* CONTACT */
 
-    .contact-email {
+    .contact {
+      min-height: 520px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .contact .section-kicker {
+      justify-content: center;
+    }
+
+    .contact .section-title {
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact .section-copy {
+      margin: 0 auto;
+    }
+
+    .contact-mail {
+      position: relative;
+      z-index: 1;
       display: inline-block;
-      margin-top: 25px;
+      margin-top: 30px;
       padding-bottom: 8px;
       border-bottom: 1px solid var(--gold);
       color: var(--gold);
-      font-size: clamp(18px, 3vw, 28px);
+      font-size: clamp(18px, 3vw, 27px);
     }
+
+    .contact-decoration {
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      border: 1px solid rgba(201,168,120,.12);
+      border-radius: 50%;
+      animation: orbitSpin 40s linear infinite;
+    }
+
+    .contact-decoration::before,
+    .contact-decoration::after {
+      content: "";
+      position: absolute;
+      inset: 30px;
+      border: 1px solid rgba(201,168,120,.1);
+      border-radius: 50%;
+    }
+
+    .contact-decoration::after {
+      inset: 70px;
+    }
+
+    /* FOOTER */
 
     footer {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 20px;
       padding: 25px 6%;
       border-top: 1px solid var(--line);
       color: var(--muted);
-      font: 9px Arial, sans-serif;
-      letter-spacing: .12em;
+      font: 9px var(--sans);
+      letter-spacing: .14em;
       text-transform: uppercase;
     }
 
+    .footer-brand {
+      color: var(--cream);
+      letter-spacing: .24em;
+    }
+
+    .back-top {
+      transition: color .3s;
+    }
+
+    .back-top:hover {
+      color: var(--gold);
+    }
+
+    /* VIDEO MODAL */
+
     .film-modal {
-      display: none;
       position: fixed;
       inset: 0;
-      z-index: 100;
+      z-index: 500;
+      display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      background: rgba(0,0,0,.92);
+      padding: 24px;
+      background: rgba(0,0,0,.94);
     }
 
-    .film-modal.open { display: flex; }
+    .film-modal.open {
+      display: flex;
+    }
 
     .modal-inner {
-      width: min(950px, 100%);
       position: relative;
+      width: min(1000px, 100%);
     }
 
-    .modal-inner video { display: block; width: 100%; max-height: 80vh; }
+    .modal-inner video {
+      display: block;
+      width: 100%;
+      max-height: 82vh;
+      background: #090807;
+    }
 
     .modal-close {
       position: absolute;
       right: 0;
       bottom: calc(100% + 12px);
-      border: 1px solid var(--line);
-      background: #211b16;
-      color: white;
       padding: 10px 15px;
+      border: 1px solid var(--line);
+      background: var(--black-soft);
+      color: white;
       cursor: pointer;
+      font: 10px var(--sans);
+      letter-spacing: .1em;
+      text-transform: uppercase;
     }
 
-    @media (max-width: 760px) {
-      .site-header { padding: 20px 5%; }
-      .logo { font-size: 22px; }
-      .menu-toggle { display: block; }
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+      .site-nav { gap: 17px; }
+      .site-nav a { font-size: 9px; }
+      .hero-content { left: 7%; }
+      .manifesto { gap: 4%; }
+      .collection-card { min-height: 360px; }
+      .card-info h3 { font-size: 26px; }
+      .section { padding: 95px 6%; }
+    }
+
+    @media (max-width: 700px) {
+      .site-header {
+        min-height: 72px;
+        padding: 18px 5%;
+      }
+
+      .logo { font-size: 24px; }
+
+      .menu-toggle {
+        display: block;
+        font: 10px var(--sans);
+        letter-spacing: .15em;
+        text-transform: uppercase;
+      }
+
       .site-nav {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
+        position: fixed;
+        top: 0;
         right: 0;
-        padding: 25px;
+        bottom: 0;
+        width: min(82%, 360px);
+        padding: 100px 35px 40px;
         background: #17130f;
+        display: flex;
         flex-direction: column;
         align-items: flex-start;
+        justify-content: center;
+        gap: 25px;
+        transform: translateX(105%);
+        visibility: hidden;
+        transition: transform .4s ease, visibility .4s;
+        box-shadow: -20px 0 50px rgba(0,0,0,.25);
       }
-      .site-nav.open { display: flex; }
-      .hero { min-height: 680px; height: 94svh; }
-      .hero-poster, .hero-video { object-position: 60% center; }
-      .hero-content { left: 4%; right: 4%; top: 48%; padding: 15px; }
+
+      .site-nav.open {
+        transform: translateX(0);
+        visibility: visible;
+      }
+
+      .site-nav a { font-size: 12px; }
+
+      .hero {
+        min-height: 690px;
+        height: 94svh;
+        max-height: 950px;
+      }
+
+      .hero-media { inset: 0; }
+
+      .hero-poster,
+      .hero-video {
+        object-position: 60% center;
+      }
+
       .hero-vignette {
         background:
-          linear-gradient(90deg, rgba(13,10,8,.66), rgba(13,10,8,.1)),
-          linear-gradient(0deg, rgba(13,10,8,.65), transparent 70%);
+          linear-gradient(90deg,
+            rgba(15,11,8,.75),
+            rgba(15,11,8,.2)),
+          linear-gradient(0deg,
+            rgba(15,11,8,.75),
+            transparent 60%);
       }
-      .hero-copy { font-size: 15px; }
-      section:not(.hero) { padding: 75px 6%; }
-      .collection-grid, .process-grid { grid-template-columns: 1fr; }
-      .collection-card { min-height: 230px; }
-      .hero-bottom { font-size: 8px; }
-      footer { flex-direction: column; line-height: 1.8; }
+
+      .hero-topline {
+        top: 95px;
+        left: 5%;
+        right: 5%;
+        font-size: 8px;
+      }
+
+      .hero-content {
+        top: 48%;
+        left: 5%;
+        width: 90%;
+        transform: translateY(-35%);
+      }
+
+      .hero-title {
+        font-size: clamp(65px, 16vw, 105px);
+      }
+
+      .hero-copy {
+        max-width: 300px;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .hero-actions { gap: 18px; }
+
+      .hero-index { right: 4%; font-size: 8px; }
+
+      .hero-bottom {
+        left: 5%;
+        right: 5%;
+        bottom: 22px;
+        font-size: 8px;
+      }
+
+      .section { padding: 78px 6%; }
+
+      .manifesto {
+        grid-template-columns: 1fr;
+      }
+
+      .manifesto-visual {
+        min-height: 330px;
+        margin-top: 10px;
+      }
+
+      .manifesto-center {
+        width: 175px;
+        height: 230px;
+      }
+
+      .orbit { width: 240px; height: 290px; }
+      .orbit.orbit-two { width: 280px; height: 240px; }
+
+      .collections-heading {
+        display: block;
+        margin-bottom: 35px;
+      }
+
+      .collection-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .collection-card { min-height: 390px; }
+
+      .film-stage { min-height: 290px; }
+      .film-ring { width: 220px; height: 220px; }
+      .film-ring.ring-two { width: 280px; height: 280px; }
+
+      .craft-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .craft-item h3 { margin-top: 15px; }
+
+      .contact { min-height: 440px; }
+
+      .contact-decoration {
+        width: 300px;
+        height: 300px;
+      }
+
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+        line-height: 1.8;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: .01ms !important; }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header class="site-header">
-    <a class="logo" href="#home" aria-label="Elisa home">Elisa</a>
+  <div class="preloader" id="preloader" aria-label="Loading Elisa">
+    <div class="loader-content">
+      <div class="loader-logo">ELISA</div>
+      <div class="loader-line"></div>
+    </div>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <a href="#home" class="logo" aria-label="Elisa home">ELI<span>S</span>A</a>
 
     <button class="menu-toggle" id="menuToggle"
-      aria-expanded="false" aria-controls="siteNav">Menu</button>
+      type="button" aria-expanded="false" aria-controls="siteNav">
+      Menu +
+    </button>
 
-    <nav class="site-nav" id="siteNav">
-      <a href="#about">About</a>
+    <nav class="site-nav" id="siteNav" aria-label="Main navigation">
+      <a href="#about">Philosophy</a>
       <a href="#collections">Collections</a>
-      <a href="#film">The Film</a>
-      <a href="#process">Craftsmanship</a>
+      <a href="#film">Campaign film</a>
+      <a href="#craft">Craftsmanship</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <main>
-    <section class="hero" id="home" aria-label="Elisa couture introduction">
+    <!-- HERO: the image file is beside index.html -->
+    <section class="hero" id="home">
       <div class="hero-media" id="heroMedia">
-        <!-- Keep elisa-model-poster.jpg in the repository root beside index.html -->
         <img
           class="hero-poster"
+          id="heroPoster"
           src="./elisa-model-poster.jpg"
-          alt="Elisa couture fashion portrait"
+          alt="Elisa couture campaign portrait"
           fetchpriority="high"
-          onerror="this.style.display='none'; console.error('Poster image failed to load:', this.src);"
+          decoding="async"
         >
 
         <video
@@ -447,193 +1258,448 @@
           playsinline
           preload="none"
           poster="./elisa-model-poster.jpg"
-          aria-label="Elisa couture campaign film">
+          aria-label="Elisa fashion campaign film">
           <source src="./assets/elisa-couture-film.mp4" type="video/mp4">
         </video>
 
         <div class="hero-vignette"></div>
+        <div class="hero-grain"></div>
       </div>
 
-      <div class="hero-content">
-        <div class="eyebrow">Contemporary couture · Est. with intention</div>
-        <h1>Elegance<br>in <em>motion.</em></h1>
-        <p class="hero-copy">
-          A study in form, feeling, and the quiet power of considered design.
-          Discover the world of Elisa.
-        </p>
-        <a class="text-link" href="#collections">Discover the collections&nbsp; ↗</a>
+      <div class="hero-topline">
+        <span>Independent couture vision</span>
+        <span>Collection — 001</span>
       </div>
+
+      <div class="hero-content" id="heroContent">
+        <div class="hero-eyebrow">The art of modern elegance</div>
+
+        <h1 class="hero-title">
+          <span class="title-line"><span>Beyond</span></span>
+          <span class="title-line"><span><em>ordinary.</em></span></span>
+        </h1>
+
+        <p class="hero-copy">
+          A cinematic exploration of silhouette, movement, and the quiet
+          confidence of timeless fashion. Welcome to the world of Elisa.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button-outline" href="#collections">
+            Explore the collection <span class="arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-index">ELISA <span> / </span> A STUDY IN FORM</div>
 
       <div class="hero-bottom">
-        <span>Designed with intention</span>
-        <span>01 — The Elisa world</span>
+        <span>Fashion · Art · Identity</span>
+        <span class="scroll-cue"><i></i> Scroll to discover</span>
+        <span>01 / 05</span>
       </div>
     </section>
 
-    <section class="manifesto" id="about">
-      <div class="section-label">01 / The philosophy</div>
-      <h2>Beyond the moment.<br>Made to be remembered.</h2>
-      <p class="intro">
-        Elisa explores the meeting point of modern femininity and timeless
-        craftsmanship. Every silhouette begins with an idea, every detail has
-        a purpose, and every piece is designed to make its own quiet statement.
-      </p>
+    <!-- PHILOSOPHY -->
+    <section class="section manifesto" id="about">
+      <div class="reveal">
+        <div class="section-kicker">01 / The philosophy</div>
+        <h2 class="section-title">
+          Elegance is<br>
+          not a moment.<br>
+          <em>It's a feeling.</em>
+        </h2>
+        <p class="section-copy">
+          Elisa is an exploration of modern femininity and enduring design.
+          Each idea begins with a feeling, develops through thoughtful
+          composition, and becomes a visual expression of individuality.
+          Less noise. More meaning. Beauty with intention.
+        </p>
+      </div>
+
+      <div class="manifesto-visual reveal reveal-delay-2">
+        <div class="orbit"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="manifesto-center">
+          <strong>E.</strong>
+          <small>Designed to endure</small>
+        </div>
+      </div>
     </section>
 
-    <section class="collections" id="collections">
-      <div class="section-label">02 / Selected collections</div>
-      <h2>Form. Texture. Feeling.</h2>
-      <p class="intro">
-        Three expressions of one creative vision, shaped by thoughtful
-        proportions, tactile materials, and understated confidence.
-      </p>
+    <!-- COLLECTIONS -->
+    <section class="section collections" id="collections">
+      <div class="collections-heading reveal">
+        <div>
+          <div class="section-kicker">02 / Selected expressions</div>
+          <h2 class="section-title">Three moods.<br><em>One vision.</em></h2>
+        </div>
+      </div>
 
       <div class="collection-grid">
-        <article class="collection-card">
-          <span>Collection I</span>
-          <h3>Modern Muse</h3>
+        <article class="collection-card reveal" data-tilt>
+          <div class="card-art art-one"></div>
+          <span class="card-number">COLLECTION 01</span>
+          <div class="card-info">
+            <small>Quiet confidence</small>
+            <h3>Modern Muse</h3>
+            <p>Clean silhouettes. A distinctive point of view.</p>
+          </div>
         </article>
-        <article class="collection-card">
-          <span>Collection II</span>
-          <h3>Soft Structure</h3>
+
+        <article class="collection-card reveal reveal-delay-1" data-tilt>
+          <div class="card-art art-two"></div>
+          <span class="card-number">COLLECTION 02</span>
+          <div class="card-info">
+            <small>Architectural softness</small>
+            <h3>Soft Structure</h3>
+            <p>Fluid forms balanced with thoughtful detail.</p>
+          </div>
         </article>
-        <article class="collection-card">
-          <span>Collection III</span>
-          <h3>After Hours</h3>
+
+        <article class="collection-card reveal reveal-delay-2" data-tilt>
+          <div class="card-art art-three"></div>
+          <span class="card-number">COLLECTION 03</span>
+          <div class="card-info">
+            <small>After dark</small>
+            <h3>Evening Muse</h3>
+            <p>Expressive elegance with a modern edge.</p>
+          </div>
         </article>
       </div>
     </section>
 
-    <section class="film-section" id="film">
-      <div class="section-label">03 / Moving image</div>
-      <h2>A world in motion.</h2>
-      <p class="intro" style="margin: 0 auto">
-        Discover the mood, movement, and details behind the Elisa vision.
-      </p>
-      <div class="film-panel">
-        <button class="film-button" id="openFilm" type="button">
-          ▶ &nbsp; Watch the campaign film
+    <!-- CAMPAIGN FILM -->
+    <section class="section film-section" id="film">
+      <div class="reveal">
+        <div class="section-kicker">03 / Moving image</div>
+        <h2 class="section-title">A world in <em>motion.</em></h2>
+        <p class="section-copy">
+          Fashion is more than what we see. It is rhythm, texture,
+          atmosphere, and the feeling that stays after the moment has passed.
+        </p>
+      </div>
+
+      <div class="film-stage reveal reveal-delay-1">
+        <div class="film-ring"></div>
+        <div class="film-ring ring-two"></div>
+
+        <button class="film-play" id="openFilm"
+          type="button" aria-label="Play the Elisa campaign film">
+          <span>▶</span>
         </button>
+
+        <div class="film-caption">
+          <span>ELISA FILM 001</span>
+          <span>Movement and form</span>
+        </div>
       </div>
     </section>
 
-    <section class="process" id="process">
-      <div class="section-label">04 / The craft</div>
-      <h2>Considered at every step.</h2>
-      <div class="process-grid">
-        <article class="process-item">
-          <b>01 — CONCEPT</b>
-          <h3>A clear vision</h3>
-          <p>Each collection begins with research, references, and a distinctive point of view.</p>
+    <!-- CRAFT -->
+    <section class="section craft" id="craft">
+      <div class="reveal">
+        <div class="section-kicker">04 / The process</div>
+        <h2 class="section-title">Beauty in every <em>detail.</em></h2>
+        <p class="section-copy">
+          A considered creative process gives every visual choice a purpose,
+          from the first reference to the final presentation.
+        </p>
+      </div>
+
+      <div class="craft-grid">
+        <article class="craft-item reveal">
+          <div class="number">01 — CONCEPT</div>
+          <h3>Begin with a feeling.</h3>
+          <p>
+            Ideas, references, light, and texture come together to form a
+            distinctive creative direction.
+          </p>
         </article>
-        <article class="process-item">
-          <b>02 — CREATION</b>
-          <h3>Attention to detail</h3>
-          <p>Shape, texture, and proportion come together through a considered design process.</p>
+
+        <article class="craft-item reveal reveal-delay-1">
+          <div class="number">02 — COMPOSITION</div>
+          <h3>Shape the vision.</h3>
+          <p>
+            Silhouette, proportion, and atmosphere work together to create
+            images with depth and character.
+          </p>
         </article>
-        <article class="process-item">
-          <b>03 — EXPRESSION</b>
-          <h3>Made personal</h3>
-          <p>The final look celebrates individuality and the confidence to express your own style.</p>
+
+        <article class="craft-item reveal reveal-delay-2">
+          <div class="number">03 — EXPRESSION</div>
+          <h3>Make it memorable.</h3>
+          <p>
+            Every detail contributes to a coherent visual identity that
+            feels contemporary yet enduring.
+          </p>
         </article>
       </div>
     </section>
 
-    <section class="contact" id="contact">
-      <div class="section-label">05 / Get in touch</div>
-      <h2>Let's create something<br>remarkable.</h2>
-      <p class="intro">
-        For collaborations, creative enquiries, and project opportunities,
-        get in touch with the Elisa team.
-      </p>
-      <!-- Replace this placeholder with your real contact email -->
-      <a class="contact-email" href="mailto:hello@example.com">hello@example.com ↗</a>
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
+      <div class="contact-decoration"></div>
+
+      <div class="reveal">
+        <div class="section-kicker">05 / The next chapter</div>
+        <h2 class="section-title">
+          Let's make<br>
+          something <em>remarkable.</em>
+        </h2>
+        <p class="section-copy">
+          For creative collaborations, campaign enquiries, and new
+          opportunities, start a conversation with Elisa.
+        </p>
+
+        <!-- Replace with your actual contact email -->
+        <a class="contact-mail" href="mailto:hello@example.com">
+          hello@example.com ↗
+        </a>
+      </div>
     </section>
   </main>
 
   <footer>
-    <span>© <span id="year"></span> Elisa — All rights reserved</span>
-    <a href="#home">Back to top ↑</a>
+    <a href="#home" class="footer-brand">ELISA</a>
+    <span>© <span id="year"></span> Elisa. All rights reserved.</span>
+    <a href="#home" class="back-top">Back to top ↑</a>
   </footer>
 
-  <div class="film-modal" id="filmModal" role="dialog"
-    aria-modal="true" aria-label="Elisa campaign film">
+  <!-- Campaign video modal -->
+  <div class="film-modal" id="filmModal"
+    role="dialog" aria-modal="true"
+    aria-label="Elisa campaign film">
+
     <div class="modal-inner">
       <button class="modal-close" id="closeFilm" type="button">Close ✕</button>
-      <video id="modalVideo" controls playsinline preload="none"
+
+      <video id="modalVideo"
+        controls
+        playsinline
+        preload="none"
         poster="./elisa-model-poster.jpg">
         <source src="./assets/elisa-couture-film.mp4" type="video/mp4">
-        Your browser does not support HTML video.
+        Your browser does not support video playback.
       </video>
     </div>
   </div>
 
   <script>
-    const menuToggle = document.getElementById("menuToggle");
-    const siteNav = document.getElementById("siteNav");
-    const heroVideo = document.getElementById("heroVideo");
-    const filmModal = document.getElementById("filmModal");
-    const modalVideo = document.getElementById("modalVideo");
-    const openFilm = document.getElementById("openFilm");
-    const closeFilm = document.getElementById("closeFilm");
+    (() => {
+      "use strict";
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+      const preloader = document.getElementById("preloader");
+      const header = document.getElementById("siteHeader");
+      const menuToggle = document.getElementById("menuToggle");
+      const siteNav = document.getElementById("siteNav");
+      const hero = document.querySelector(".hero");
+      const heroMedia = document.getElementById("heroMedia");
+      const heroContent = document.getElementById("heroContent");
+      const heroVideo = document.getElementById("heroVideo");
+      const filmModal = document.getElementById("filmModal");
+      const modalVideo = document.getElementById("modalVideo");
+      const openFilm = document.getElementById("openFilm");
+      const closeFilm = document.getElementById("closeFilm");
 
-    menuToggle.addEventListener("click", () => {
-      const isOpen = siteNav.classList.toggle("open");
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
-    });
+      document.getElementById("year").textContent =
+        new Date().getFullYear();
 
-    siteNav.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
+      /* PRELOADER */
+      function hidePreloader() {
+        if (preloader) preloader.classList.add("done");
+      }
+
+      window.addEventListener("load", () => {
+        setTimeout(hidePreloader, 450);
+      });
+
+      setTimeout(hidePreloader, 2200);
+
+      /* NAVIGATION */
+      function closeMenu() {
         siteNav.classList.remove("open");
         menuToggle.setAttribute("aria-expanded", "false");
-      });
-    });
-
-    // The poster remains visible unless the video successfully starts.
-    heroVideo.addEventListener("playing", () => {
-      heroVideo.classList.add("ready");
-    });
-
-    heroVideo.addEventListener("error", () => {
-      heroVideo.classList.remove("ready");
-    });
-
-    // Try the background video; failure leaves the poster visible.
-    if (heroVideo && heroVideo.querySelector("source")) {
-      heroVideo.play().catch(() => {
-        heroVideo.classList.remove("ready");
-      });
-    }
-
-    function showFilm() {
-      filmModal.classList.add("open");
-      document.body.style.overflow = "hidden";
-      modalVideo.play().catch(() => {});
-      closeFilm.focus();
-    }
-
-    function hideFilm() {
-      filmModal.classList.remove("open");
-      document.body.style.overflow = "";
-      modalVideo.pause();
-      modalVideo.currentTime = 0;
-      openFilm.focus();
-    }
-
-    openFilm.addEventListener("click", showFilm);
-    closeFilm.addEventListener("click", hideFilm);
-
-    filmModal.addEventListener("click", event => {
-      if (event.target === filmModal) hideFilm();
-    });
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape" && filmModal.classList.contains("open")) {
-        hideFilm();
+        menuToggle.textContent = "Menu +";
+        document.body.classList.remove("menu-open");
       }
-    });
+
+      menuToggle.addEventListener("click", () => {
+        const open = !siteNav.classList.contains("open");
+
+        siteNav.classList.toggle("open", open);
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.textContent = open ? "Close −" : "Menu +";
+        document.body.classList.toggle("menu-open", open);
+      });
+
+      siteNav.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", closeMenu);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 700) closeMenu();
+      });
+
+      /* STICKY HEADER */
+      function updateHeader() {
+        header.classList.toggle("scrolled", window.scrollY > 70);
+      }
+
+      window.addEventListener("scroll", updateHeader, { passive: true });
+      updateHeader();
+
+      /* SCROLL REVEALS */
+      const revealItems = document.querySelectorAll(".reveal");
+
+      if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12,
+          rootMargin: "0px 0px -35px 0px"
+        });
+
+        revealItems.forEach(item => revealObserver.observe(item));
+      } else {
+        revealItems.forEach(item => item.classList.add("visible"));
+      }
+
+      /* HERO VIDEO: POSTER STAYS VISIBLE UNTIL VIDEO PLAYS */
+      if (heroVideo) {
+        heroVideo.addEventListener("playing", () => {
+          heroVideo.classList.add("ready");
+        });
+
+        heroVideo.addEventListener("pause", () => {
+          if (heroVideo.currentTime === 0) {
+            heroVideo.classList.remove("ready");
+          }
+        });
+
+        heroVideo.addEventListener("error", () => {
+          heroVideo.classList.remove("ready");
+        });
+
+        const source = heroVideo.querySelector("source");
+
+        if (source) {
+          heroVideo.play().catch(() => {
+            heroVideo.classList.remove("ready");
+          });
+        }
+      }
+
+      /* 3D HERO PARALLAX — DESKTOP POINTER */
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      const finePointer = window.matchMedia(
+        "(hover: hover) and (pointer: fine)"
+      ).matches;
+
+      if (!reduceMotion && finePointer && hero) {
+        let pointerX = 0;
+        let pointerY = 0;
+        let framePending = false;
+
+        hero.addEventListener("pointermove", event => {
+          const rect = hero.getBoundingClientRect();
+
+          pointerX = (event.clientX - rect.left) / rect.width - 0.5;
+          pointerY = (event.clientY - rect.top) / rect.height - 0.5;
+
+          if (!framePending) {
+            framePending = true;
+
+            requestAnimationFrame(() => {
+              heroMedia.style.transform =
+                `scale(1.06) translate(${pointerX * -12}px, ${pointerY * -9}px)`;
+
+              heroContent.style.marginLeft = `${pointerX * 9}px`;
+              heroContent.style.marginTop = `${pointerY * 5}px`;
+
+              framePending = false;
+            });
+          }
+        });
+
+        hero.addEventListener("pointerleave", () => {
+          heroMedia.style.transform = "";
+          heroContent.style.marginLeft = "";
+          heroContent.style.marginTop = "";
+        });
+      }
+
+      /* 3D TILT COLLECTION CARDS */
+      if (!reduceMotion && finePointer) {
+        document.querySelectorAll("[data-tilt]").forEach(card => {
+          card.addEventListener("pointermove", event => {
+            const rect = card.getBoundingClientRect();
+            const x = (event.clientX - rect.left) / rect.width;
+            const y = (event.clientY - rect.top) / rect.height;
+
+            const rotateY = (x - 0.5) * 12;
+            const rotateX = (0.5 - y) * 10;
+
+            card.style.transform =
+              `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+          });
+
+          card.addEventListener("pointerleave", () => {
+            card.style.transform =
+              "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+          });
+        });
+      }
+
+      /* CAMPAIGN FILM MODAL */
+      function showFilm() {
+        filmModal.classList.add("open");
+        document.body.style.overflow = "hidden";
+
+        modalVideo.play().catch(() => {
+          /* The modal remains open if playback needs a manual click. */
+        });
+
+        closeFilm.focus();
+      }
+
+      function hideFilm() {
+        filmModal.classList.remove("open");
+        document.body.style.overflow = "";
+
+        modalVideo.pause();
+
+        try {
+          modalVideo.currentTime = 0;
+        } catch (_) {}
+
+        openFilm.focus();
+      }
+
+      openFilm.addEventListener("click", showFilm);
+      closeFilm.addEventListener("click", hideFilm);
+
+      filmModal.addEventListener("click", event => {
+        if (event.target === filmModal) hideFilm();
+      });
+
+      document.addEventListener("keydown", event => {
+        if (
+          event.key === "Escape" &&
+          filmModal.classList.contains("open")
+        ) {
+          hideFilm();
+        }
+      });
+    })();
   </script>
 </body>
 </html>
