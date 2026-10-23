@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#100e0c">
+  <meta name="description" content="Explore Elisa's couture collections, creative process and fashion design portfolio.">
+  <title>ELISA® — Couture in Motion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="preloader" id="preloader" aria-label="Loading portfolio"><span class="preloader-logo">E.</span><div class="load-track"><i></i></div><span class="mono">DRESSING THE IMAGINATION</span></div>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Elisa home">ELISA<span>®</span><small>FASHION DESIGNER</small></a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Open navigation"><span></span><span></span></button>
+    <nav id="siteNav" class="site-nav">
+      <a class="active" href="#home">Home</a><a href="#about">About</a><a href="#collections">Collections</a><a href="#process">Process</a><a href="#journal">Journal</a>
+    </nav>
+    <a class="header-cta" href="#contact">LET'S CREATE <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-media" id="heroMedia">
+        <div class="hero-image" aria-hidden="true"></div>
+        <video id="heroVideo" class="hero-video" autoplay muted loop playsinline poster="assets/elisa-model-poster.jpg" preload="metadata" aria-label="Cinematic fashion film featuring Elisa's couture look">
+          <source src="assets/elisa-couture-film.mp4" type="video/mp4">
+        </video>
+        <div class="hero-vignette"></div>
+        <div class="light-beam"></div>
+        <div class="floating-petals" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+
+      <div class="hero-topline mono"><span><i class="live-dot"></i> INDEPENDENT COUTURE STUDIO</span><span>EST. MMXXVI · WORLDWIDE ENQUIRIES</span></div>
+      <div class="hero-side-index mono"><span class="index-current">01</span><span>—</span><span>05</span><small>THE EXPERIENCE</small></div>
+      <div class="hero-content">
+        <p class="eyebrow mono"><span>FASHION</span><b>✳</b><span>ART</span><b>✳</b><span>EMOTION</span></p>
+        <h1>Wear your<br><em>story.</em></h1>
+        <p class="hero-intro">Couture that moves beyond the moment. Thoughtful silhouettes, expressive details, and a little bit of magic in every thread.</p>
+        <div class="hero-actions">
+          <a class="button button-gold" href="#collections">EXPLORE COLLECTIONS <span>↗</span></a>
+          <button class="play-film" id="openFilm" type="button" aria-label="Open fashion film"><span class="play-icon">▶</span><span>WATCH THE FILM<small>00:18 · EDITORIAL REEL</small></span></button>
+        </div>
+      </div>
+      <div class="hero-feature">
+        <div class="feature-thumb"></div><div><span class="mono">NOW PRESENTING</span><strong>Éclat / 01</strong><small>CHAMPAGNE COUTURE STUDY</small></div><a href="#collections" aria-label="Explore Éclat collection">↗</a>
+      </div>
+      <div class="hero-bottom mono"><span>01 — 05</span><span class="bottom-line"><i></i></span><a href="#about">SCROLL TO DISCOVER <b>↓</b></a><span>KERALA · EVERYWHERE</span></div>
+      <div class="hero-vertical mono">CRAFTED WITH INTENTION · WORN WITH FEELING</div>
+    </section>
+
+    <section class="manifesto section-pad" id="about">
+      <div class="section-kicker mono reveal"><span>01 / THE DESIGNER</span><span>AN INTRODUCTION</span></div>
+      <div class="manifesto-grid">
+        <h2 class="reveal">Clothing is the canvas.<br><em>Feeling is the language.</em></h2>
+        <div class="manifesto-copy reveal"><p>Elisa is a fashion designer creating expressive pieces for people who see style as a form of self-expression. Inspired by movement, texture, and the unexpected beauty of detail, each design begins with a feeling—and becomes a story you can wear.</p><a class="underlined-link" href="#process">INSIDE THE ATELIER <span>↗</span></a></div>
+      </div>
+      <div class="manifesto-stamp" aria-hidden="true">E</div>
+    </section>
+
+    <section class="collections section-pad" id="collections">
+      <div class="section-kicker mono reveal"><span>02 / THE COLLECTIONS</span><span>SELECTED WORLDS · 2026</span></div>
+      <div class="collections-heading reveal"><h2>Different moods.<br><em>One point of view.</em></h2><p>From luminous couture to confident modern silhouettes, discover the ideas shaping the Elisa universe.</p></div>
+      <div class="collection-grid">
+        <a class="collection-card card-large reveal" href="#contact" aria-label="Enquire about Éclat couture collection">
+          <div class="collection-art art-eclat"><div class="art-orb"></div><div class="art-fabric"></div><span class="collection-no mono">COLLECTION Nº 01</span><span class="collection-open">↗</span><div class="collection-title"><span class="mono">LIGHT / MOVEMENT / DETAIL</span><h3>Éclat</h3><small>CHAMPAGNE COUTURE</small></div></div>
+        </a>
+        <a class="collection-card reveal" href="#contact" aria-label="Enquire about Rouge collection">
+          <div class="collection-art art-rouge"><div class="art-orb"></div><span class="collection-no mono">COLLECTION Nº 02</span><span class="collection-open">↗</span><div class="collection-title"><span class="mono">CONFIDENCE / CONTRAST</span><h3>Rouge</h3><small>EVENING EXPRESSION</small></div></div>
+        </a>
+        <a class="collection-card reveal" href="#contact" aria-label="Enquire about Forma collection">
+          <div class="collection-art art-forma"><div class="art-orb"></div><span class="collection-no mono">COLLECTION Nº 03</span><span class="collection-open">↗</span><div class="collection-title"><span class="mono">STRUCTURE / SIMPLICITY</span><h3>Forma</h3><small>MODERN SILHOUETTES</small></div></div>
+        </a>
+      </div>
+      <div class="gallery-footer mono"><span>THE ELISA COLLECTION ARCHIVE</span><span>01 — 03</span></div>
+    </section>
+
+    <section class="film-strip" id="journal">
+      <div class="film-copy reveal"><p class="mono">03 / NOTES FROM THE ATELIER</p><h2>Every detail<br>has a <em>pulse.</em></h2><p>Fabric in motion. A pencil line. The last fitting before the lights come up. The process is part of the piece.</p><a href="#process" class="underlined-link">FOLLOW THE PROCESS ↗</a></div>
+      <div class="film-visual reveal"><div class="film-image"></div><div class="film-caption mono"><span>ATELIER STUDY 001</span><span>TEXTURE / LIGHT / FORM</span></div><div class="film-circle">E<span>®</span></div></div>
+    </section>
+
+    <section class="process section-pad" id="process">
+      <div class="section-kicker mono reveal"><span>04 / FROM IDEA TO FORM</span><span>THE DESIGN PROCESS</span></div>
+      <div class="process-head reveal"><h2>Made with intention.<br><em>Finished with feeling.</em></h2><p>A thoughtful journey from the first reference to the final fitting—where every decision has a purpose.</p></div>
+      <div class="process-list">
+        <article class="process-row reveal"><span class="mono">01</span><h3>Gather inspiration</h3><p>Art, culture, nature, archives, and the world around us.</p><span class="row-arrow">↗</span></article>
+        <article class="process-row reveal"><span class="mono">02</span><h3>Shape the idea</h3><p>Sketches, moodboards, material studies, and silhouettes.</p><span class="row-arrow">↗</span></article>
+        <article class="process-row reveal"><span class="mono">03</span><h3>Craft the piece</h3><p>Construction, fitting, finish, and obsessive attention to detail.</p><span class="row-arrow">↗</span></article>
+        <article class="process-row reveal"><span class="mono">04</span><h3>Tell its story</h3><p>Photography, styling, and a visual world for the finished work.</p><span class="row-arrow">↗</span></article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-backdrop"></div><div class="contact-content reveal"><p class="mono">05 / COMMISSIONS · COLLABORATIONS · ENQUIRIES</p><h2>Let's make<br><em>something unforgettable.</em></h2><p>Have a collection in mind, a collaboration to explore, or a story to tell? Elisa would love to hear from you.</p><a class="button button-gold" href="mailto:elisa@example.com?subject=Fashion%20design%20enquiry">START A CONVERSATION <span>↗</span></a></div><div class="contact-signature">Elisa<span>®</span></div>
+    </section>
+  </main>
+
+  <footer class="footer"><a class="brand" href="#home">ELISA<span>®</span><small>FASHION DESIGNER</small></a><p class="mono">© <span id="year"></span> ELISA STUDIO · ALL STORIES RESERVED</p><div class="footer-links mono"><a href="#collections">COLLECTIONS</a><a href="#contact">CONTACT</a><a href="#home">BACK TO TOP ↑</a></div></footer>
+
+  <div class="film-modal" id="filmModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Elisa fashion film">
+    <button class="modal-close" id="closeFilm" aria-label="Close fashion film">×</button>
+    <video id="modalVideo" controls playsinline poster="assets/elisa-model-poster.jpg"><source src="assets/elisa-couture-film.mp4" type="video/mp4"></video>
+    <div class="modal-fallback" id="modalFallback"><div class="fallback-image"></div><p class="mono">ELISA / COUTURE IN MOTION</p><span>The showreel will play here when you add <code>assets/elisa-couture-film.mp4</code>.</span></div>
+  </div>
+  <script src="script.js"></script>
+</body></html>
